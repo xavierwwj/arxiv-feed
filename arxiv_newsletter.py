@@ -24,7 +24,7 @@ MAX_PAPERS      = int(os.getenv("MAX_PAPERS", "30"))   # cap to avoid huge messa
 QUANTUM_SENSING_TERMS = [
     "quantum sens", "quantum sensor", "atomic sensor", "atomic clock",
     "optical clock", "atom interferom", "matter-wave interferom",
-    "magnetomet", "gravimeter", "gradiometer", "acceleromet", "gyroscop",
+    "magnetomet", "electromet", "gravimeter", "gradiometer", "acceleromet", "gyroscop",
     "spin squeezing", "squeezed state", "entanglement-enhanced",
     "heisenberg limit", "standard quantum limit", "shot noise",
     "rydberg sensor", "rydberg atom", "rydberg rf", "optical lattice clock",
