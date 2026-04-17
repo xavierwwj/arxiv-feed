@@ -27,7 +27,7 @@ QUANTUM_SENSING_TERMS = [
     "magnetomet", "gravimeter", "gradiometer", "acceleromet", "gyroscop",
     "spin squeezing", "squeezed state", "entanglement-enhanced",
     "heisenberg limit", "standard quantum limit", "shot noise",
-    "rydberg sensor", "rydberg atom", "optical lattice clock",
+    "rydberg sensor", "rydberg atom", "rydberg rf", "optical lattice clock",
     "fountain clock", "ramsey spectroscop", "ramsey interferom",
     "optically pumped magnetom", "optically-pumped magnetom", "opm magnetom",
     "atom beam", "atomic beam",
