@@ -29,6 +29,12 @@ QUANTUM_SENSING_TERMS = [
     "heisenberg limit", "standard quantum limit", "shot noise",
     "rydberg sensor", "rydberg atom", "optical lattice clock",
     "fountain clock", "ramsey spectroscop", "ramsey interferom",
+    "optically pumped magnetom", "opm magnetom",
+    "nitrogen-vacancy", "nv center", "nv centre", "nv diamond",
+    "diamond magnetom", "diamond sensor",
+    "nmr gyro", "nuclear magnetic resonance gyro",
+    "photonic integrated circuit", "integrated photonic",
+    "photonic chip", "on-chip laser", "on-chip atomic",
 ]
 
 # ── helpers ────────────────────────────────────────────────────────────────
