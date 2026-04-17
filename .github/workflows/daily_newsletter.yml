@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: pip install arxiv anthropic requests
 
-      - name: Run newsletter
+      - name: Run newsletter 
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
