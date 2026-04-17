@@ -19,7 +19,7 @@ TELEGRAM_TOKEN  = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT   = os.getenv("TELEGRAM_CHAT_ID", "")
 ANTHROPIC_KEY   = os.getenv("ANTHROPIC_API_KEY", "")
 LOOKBACK_HOURS  = int(os.getenv("LOOKBACK_HOURS", "24"))
-MAX_PAPERS      = int(os.getenv("MAX_PAPERS", "30"))   # cap to avoid huge messages
+MAX_PAPERS      = int(os.getenv("MAX_PAPERS", "10"))   # cap to avoid huge messages
 
 QUANTUM_SENSING_TERMS = [
     "quantum sens", "quantum sensor", "atomic sensor", "atomic clock",
