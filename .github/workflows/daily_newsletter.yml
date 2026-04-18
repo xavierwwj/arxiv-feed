@@ -8,6 +8,8 @@ on:
 jobs:
   send-newsletter:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4.2.2
 
@@ -28,10 +30,10 @@ jobs:
           MAX_PAPERS: "15"
         run: python arxiv_newsletter.py
 
-      - name: Upload paper cache
-        uses: actions/upload-artifact@v4
-        with:
-          name: papers-today
-          path: papers_today.json
-          overwrite: true
-          retention-days: 2
+      - name: Commit paper cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add papers_today.json
+          git diff --cached --quiet || git commit -m "Update papers_today.json [skip ci]"
+          git push
