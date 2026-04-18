@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: pip install requests google-api-python-client google-auth
 
+      - name: Download paper cache
+        uses: actions/download-artifact@v4
+        with:
+          name: papers-today
+
       - name: Write service account key
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}' > service_account.json
 

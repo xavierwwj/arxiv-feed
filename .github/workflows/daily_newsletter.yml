@@ -24,6 +24,14 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ARXIV_CATEGORY: physics.atom-ph
-          LOOKBACK_HOURS: "24"
+          LOOKBACK_HOURS: "168"
           MAX_PAPERS: "15"
         run: python arxiv_newsletter.py
+
+      - name: Upload paper cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: papers-today
+          path: papers_today.json
+          overwrite: true
+          retention-days: 2

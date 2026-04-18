@@ -28,6 +28,15 @@ def drive_service():
     return build("drive", "v3", credentials=creds)
 
 
+def file_exists_in_drive(service, filename: str) -> str | None:
+    """Return webViewLink if file already exists in the folder, else None."""
+    q = (f"name='{filename}' and '{GDRIVE_FOLDER_ID}' in parents "
+         f"and trashed=false")
+    res = service.files().list(q=q, fields="files(id,webViewLink)").execute()
+    files = res.get("files", [])
+    return files[0].get("webViewLink") if files else None
+
+
 def upload_pdf(service, pdf_path: str, filename: str) -> str:
     meta = {"name": filename, "parents": [GDRIVE_FOLDER_ID]}
     media = MediaFileUpload(pdf_path, mimetype="application/pdf")
@@ -62,6 +71,12 @@ def main(indices: list[str]):
         arxiv_id = entry["arxiv_id"]
         title    = entry["title"]
         filename = f"{arxiv_id} - {title[:80]}.pdf".replace("/", "-")
+
+        existing = file_exists_in_drive(svc, filename)
+        if existing:
+            print(f"  [{idx}] Already in Drive, skipping.")
+            send_telegram(f"⚠️ *{title}* is already in Drive.\n[Open]({existing})")
+            continue
 
         print(f"  [{idx}] Downloading {arxiv_id}…")
         r = requests.get(entry["pdf_url"], timeout=60)

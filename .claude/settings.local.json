@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(crontab -l)",
+      "WebFetch(domain:export.arxiv.org)",
+      "WebFetch(domain:api.telegram.org)",
+      "Bash(curl -s -X POST https://api.telegram.org/bot8662753065:AAHa8LlMypfS9wR7iXJqB2xrsUFcvPk9IxY/sendMessage -H 'Content-Type: application/json' -d '{\"chat_id\": \"196189683\", \"parse_mode\": \"Markdown\", \"disable_web_page_preview\": true, \"text\": \"📡 arXiv physics.atom-ph — no new papers in the past 24h.\"}')"
+    ]
+  }
+}
