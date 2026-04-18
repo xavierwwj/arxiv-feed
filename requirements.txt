@@ -1,0 +1,10 @@
+anthropic
+arxiv
+google-api-python-client
+google-auth
+google-auth-oauthlib
+lightrag-hku
+mcp
+pymupdf
+requests
+voyageai

@@ -3,5 +3,6 @@ newsletter.log
 service_account.json
 oauth_client.json
 token.json
+lightrag_ingested.json
 __pycache__/
 *.pyc
