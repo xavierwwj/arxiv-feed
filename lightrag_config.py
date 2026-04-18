@@ -12,12 +12,7 @@ from lightrag.utils import EmbeddingFunc
 
 ANTHROPIC_KEY  = os.getenv("ANTHROPIC_API_KEY", "")
 VOYAGE_KEY     = os.getenv("VOYAGE_API_KEY", "")
-LIGHTRAG_DIR   = os.getenv(
-    "LIGHTRAG_DIR",
-    os.path.expanduser(
-        "~/Library/CloudStorage/GoogleDrive-xavierwwj97@gmail.com/My Drive/LightRAG DB"
-    ),
-)
+LIGHTRAG_DIR   = os.getenv("LIGHTRAG_DIR", "/lightrag-db")
 
 _anthropic = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
 _voyage    = voyageai.Client(api_key=VOYAGE_KEY)
