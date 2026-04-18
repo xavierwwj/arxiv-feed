@@ -184,7 +184,7 @@ def main():
         json.dump(cache, f, indent=2)
     print("Saved papers_today.json")
 
-    footer = f"─────\n✅ End of digest · {len(papers)} papers sent\n\nReply *save 1 3 5* to keep papers in Google Drive."
+    footer = f"─────\n✅ End of digest · {len(papers)} papers sent\n\nReply *save <numbers>* to keep papers in Google Drive.\nExample: save 1 2 5"
     send_telegram(footer, TELEGRAM_TOKEN, TELEGRAM_CHAT)
     print("Done.")
 
