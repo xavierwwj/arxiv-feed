@@ -20,12 +20,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests google-api-python-client google-auth
 
-      - name: Write service account key
-        run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}' > service_account.json
-
       - name: Save papers
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
         run: python save_papers.py ${{ github.event.inputs.indices }}

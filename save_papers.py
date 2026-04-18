@@ -10,20 +10,22 @@ import sys
 import tempfile
 
 import requests
-from google.oauth2 import service_account
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-GDRIVE_FOLDER_ID     = os.getenv("GDRIVE_FOLDER_ID", "1PL3p2kAc4kUIDzdv7DDYn4wQjI8jya6l")
-SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE", "service_account.json")
-TELEGRAM_TOKEN       = os.getenv("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT        = os.getenv("TELEGRAM_CHAT_ID", "")
+GDRIVE_FOLDER_ID = os.getenv("GDRIVE_FOLDER_ID", "1PL3p2kAc4kUIDzdv7DDYn4wQjI8jya6l")
+TELEGRAM_TOKEN   = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT    = os.getenv("TELEGRAM_CHAT_ID", "")
 
 
 def drive_service():
-    creds = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE,
-        scopes=["https://www.googleapis.com/auth/drive.file"],
+    creds = Credentials(
+        token=None,
+        refresh_token=os.environ["GDRIVE_REFRESH_TOKEN"],
+        client_id=os.environ["GDRIVE_CLIENT_ID"],
+        client_secret=os.environ["GDRIVE_CLIENT_SECRET"],
+        token_uri="https://oauth2.googleapis.com/token",
     )
     return build("drive", "v3", credentials=creds)
 
