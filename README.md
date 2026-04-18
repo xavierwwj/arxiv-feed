@@ -171,14 +171,13 @@ Each user:
 
 ---
 
-## Cost estimate (per user/month)
+## Cost estimate (per user)
 
 | Service | Cost |
 |---|---|
-| Anthropic API (Haiku) — newsletter summaries | ~$0.10 |
-| Anthropic API (Haiku) — LightRAG ingestion | ~$0.50–2.00 depending on papers saved |
+| Anthropic API (Haiku) — newsletter summary | ~$0.0002 per paper |
+| Anthropic API (Haiku) — LightRAG ingestion | ~$0.01–0.02 per paper |
 | Voyage AI embeddings | Free (200M tokens/month) |
 | GitHub Actions | Free |
 | Cloudflare Workers | Free |
 | Google Drive | Free (15GB) |
-| **Total** | **~$0.60–2.10/month** |
