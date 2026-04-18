@@ -88,7 +88,12 @@ async def main():
     print(f"Found {len(pdfs)} PDF(s) in Drive folder.")
     for p in pdfs:
         print(f"  - {p['name']} ({p['id']})")
-    new_pdfs = [p for p in pdfs if p["id"] not in ingested]
+    def already_ingested(pdf):
+        # match by Drive file ID or by arXiv ID extracted from filename
+        arxiv_id = pdf["name"].split(" - ")[0]  # e.g. "1610.09550v1"
+        return pdf["id"] in ingested or f"manual:{arxiv_id}" in ingested
+
+    new_pdfs = [p for p in pdfs if not already_ingested(p)]
 
     if not new_pdfs:
         print("No new papers to ingest.")

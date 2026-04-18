@@ -84,6 +84,22 @@ async def list_tools() -> list[Tool]:
     ]
 
 
+async def _ingest_background(short_id: str, drive_id: str, ingested_log: str):
+    try:
+        r    = requests.get(f"https://arxiv.org/pdf/{short_id}", timeout=60)
+        doc  = fitz.open(stream=r.content, filetype="pdf")
+        text = "\n".join(page.get_text() for page in doc)
+        rag  = await get_initialized_rag()
+        await rag.ainsert(text)
+        ingested = set(json.load(open(ingested_log))) if os.path.exists(ingested_log) else set()
+        ingested.add(drive_id)
+        with open(ingested_log, "w") as f:
+            json.dump(sorted(ingested), f, indent=2)
+        print(f"Background ingestion complete: {short_id}", flush=True)
+    except Exception as e:
+        print(f"Background ingestion failed for {short_id}: {e}", flush=True)
+
+
 @server.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     if name == "query_papers":
@@ -133,24 +149,20 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
             svc.files().create(body=meta, media_body=media, fields="id").execute()
             os.unlink(tmp_path)
 
-        # lightrag ingestion
+        # lightrag ingestion — run in background so we return immediately
         lightrag_dir = os.environ.get("LIGHTRAG_DIR", "/lightrag-db")
         ingested_log = os.path.join(lightrag_dir, "lightrag_ingested.json")
         ingested     = set(json.load(open(ingested_log))) if os.path.exists(ingested_log) else set()
         drive_id     = f"manual:{short_id}"
 
         if drive_id not in ingested:
-            r    = requests.get(f"https://arxiv.org/pdf/{short_id}", timeout=60)
-            doc  = fitz.open(stream=r.content, filetype="pdf")
-            text = "\n".join(page.get_text() for page in doc)
-            rag  = await get_initialized_rag()
-            await rag.ainsert(text)
-            ingested.add(drive_id)
-            with open(ingested_log, "w") as f:
-                json.dump(sorted(ingested), f, indent=2)
+            asyncio.create_task(_ingest_background(short_id, drive_id, ingested_log))
+            ingest_status = "LightRAG ingestion started in background."
+        else:
+            ingest_status = "Already in LightRAG."
 
         status = "already in Drive" if exists else "saved to Drive"
-        return [TextContent(type="text", text=f"✅ *{paper.title}* — {status} and ingested into LightRAG.")]
+        return [TextContent(type="text", text=f"✅ *{paper.title}* — {status}. {ingest_status}")]
 
     raise ValueError(f"Unknown tool: {name}")
 
