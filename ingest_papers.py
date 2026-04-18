@@ -18,7 +18,7 @@ import io
 
 from lightrag_config import get_rag, LIGHTRAG_DIR
 
-GDRIVE_FOLDER_ID   = os.getenv("GDRIVE_FOLDER_ID", "1PL3p2kAc4kUIDzdv7DDYn4wQjI8jya6l")
+GDRIVE_FOLDER_ID   = os.getenv("GDRIVE_FOLDER_ID", "")
 LIGHTRAG_DIR  = os.getenv("LIGHTRAG_DIR", "/lightrag-db")
 INGESTED_LOG  = os.path.join(LIGHTRAG_DIR, "lightrag_ingested.json")
 

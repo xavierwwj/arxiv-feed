@@ -134,7 +134,7 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
             token_uri="https://oauth2.googleapis.com/token",
         )
         svc    = build("drive", "v3", credentials=creds)
-        folder = os.environ.get("GDRIVE_FOLDER_ID", "1PL3p2kAc4kUIDzdv7DDYn4wQjI8jya6l")
+        folder = os.environ.get("GDRIVE_FOLDER_ID", "")
         q      = f"name='{filename}' and '{folder}' in parents and trashed=false"
         exists = svc.files().list(q=q, fields="files(webViewLink)").execute().get("files", [])
 

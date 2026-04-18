@@ -14,7 +14,7 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-GDRIVE_FOLDER_ID = os.getenv("GDRIVE_FOLDER_ID", "1PL3p2kAc4kUIDzdv7DDYn4wQjI8jya6l")
+GDRIVE_FOLDER_ID = os.getenv("GDRIVE_FOLDER_ID", "")
 TELEGRAM_TOKEN   = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT    = os.getenv("TELEGRAM_CHAT_ID", "")
 
