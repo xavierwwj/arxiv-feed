@@ -5,6 +5,7 @@ fetches citation counts from Semantic Scholar.
 """
 
 import os
+import json
 import time
 import textwrap
 from datetime import datetime, timedelta, timezone
@@ -175,7 +176,20 @@ def main():
         send_telegram(block, TELEGRAM_TOKEN, TELEGRAM_CHAT)
         time.sleep(0.3)
 
-    footer = f"─────\n✅ End of digest · {len(papers)} papers sent"
+    # save paper list so the save-papers action can look up IDs by number
+    cache = {
+        str(idx): {
+            "arxiv_id": p.get_short_id(),
+            "title": p.title,
+            "pdf_url": f"https://arxiv.org/pdf/{p.get_short_id()}",
+        }
+        for idx, p in enumerate(papers, 1)
+    }
+    with open("papers_today.json", "w") as f:
+        json.dump(cache, f, indent=2)
+    print("Saved papers_today.json")
+
+    footer = f"─────\n✅ End of digest · {len(papers)} papers sent\n\nReply *save 1 3 5* to keep papers in Google Drive."
     send_telegram(footer, TELEGRAM_TOKEN, TELEGRAM_CHAT)
     print("Done.")
 
