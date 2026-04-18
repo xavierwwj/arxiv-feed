@@ -60,10 +60,8 @@ def fetch_papers() -> list[arxiv.Result]:
         if r.published < cutoff:
             break
         papers.append(r)
-    # quantum-sensing papers first, then the rest; cap total
-    qs   = [p for p in papers if is_quantum_sensing(p)]
-    rest = [p for p in papers if not is_quantum_sensing(p)]
-    return (qs + rest)[:MAX_PAPERS], len(qs), len(papers)
+    qs = [p for p in papers if is_quantum_sensing(p)]
+    return qs[:MAX_PAPERS], len(qs), len(papers)
 
 
 def first_and_last_authors(paper: arxiv.Result) -> str:
@@ -157,12 +155,10 @@ def main():
     header = (
         f"📡 *arXiv Daily · {CATEGORY}*\n"
         f"📆 {date_str} — past {LOOKBACK_HOURS}h\n"
-        f"📄 {total} new papers | 🔬 {qs_count} quantum-sensing highlighted\n"
+        f"📄 {total} new papers total | 🔬 {qs_count} quantum-sensing\n"
         f"{'─'*35}"
     )
     send_telegram(header, TELEGRAM_TOKEN, TELEGRAM_CHAT)
-
-    qs_set = {p.get_short_id() for p in papers if is_quantum_sensing(p)}
 
     for idx, paper in enumerate(papers, 1):
         print(f"  [{idx}/{len(papers)}] {paper.title[:60]}…")
@@ -171,8 +167,7 @@ def main():
         except Exception as e:
             summary, authors = f"(summary error: {e})", "unknown"
 
-        is_qs  = paper.get_short_id() in qs_set
-        block  = format_paper_block(idx, paper, summary, authors, is_qs)
+        block  = format_paper_block(idx, paper, summary, authors, is_qs=True)
         send_telegram(block, TELEGRAM_TOKEN, TELEGRAM_CHAT)
         time.sleep(0.3)
 
