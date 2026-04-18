@@ -26,7 +26,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ARXIV_CATEGORY: physics.atom-ph
-          LOOKBACK_HOURS: "168"
+          LOOKBACK_HOURS: "24"
           MAX_PAPERS: "15"
         run: python arxiv_newsletter.py
 
