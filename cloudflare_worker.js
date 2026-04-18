@@ -5,7 +5,7 @@
  *
  * Required environment variables (set as Worker secrets):
  *   TELEGRAM_BOT_TOKEN  - your bot token
- *   TELEGRAM_CHAT_ID    - your personal chat ID (security: ignore other chats)
+ *   TELEGRAM_CHAT_ID    - allowed group or personal chat ID (security: ignore other chats)
  *   GITHUB_TOKEN        - personal access token with workflow write scope
  *   GITHUB_REPO         - e.g. "xavierwwj/arxiv-feed"
  *   GITHUB_BRANCH       - e.g. "master"
@@ -30,8 +30,11 @@ export default {
     const chatId = String(message.chat.id);
     const text   = message.text.trim();
 
+    console.log(`Incoming chatId: ${chatId}, allowed: ${env.TELEGRAM_CHAT_ID}`);
+
     // ignore messages from other chats
     if (chatId !== env.TELEGRAM_CHAT_ID) {
+      console.log(`Rejected chat ${chatId}`);
       return new Response("OK", { status: 200 });
     }
 
