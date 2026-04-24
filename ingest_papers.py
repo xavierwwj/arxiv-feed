@@ -35,7 +35,7 @@ def drive_service():
 
 
 def list_drive_pdfs(svc) -> list[dict]:
-    q = f"'{GDRIVE_FOLDER_ID}' in parents and mimeType='application/pdf' and trashed=false"
+    q = f"'{GDRIVE_FOLDER_ID}' in parents and trashed=false"
     results = []
     page_token = None
     while True:
@@ -93,7 +93,7 @@ async def main():
         arxiv_id = pdf["name"].split(" - ")[0]  # e.g. "1610.09550v1"
         return pdf["id"] in ingested or f"manual:{arxiv_id}" in ingested
 
-    new_pdfs = [p for p in pdfs if not already_ingested(p)]
+    new_pdfs = [p for p in pdfs if not already_ingested(p) and p["name"].lower().endswith(".pdf")]
 
     if not new_pdfs:
         print("No new papers to ingest.")
