@@ -31,20 +31,11 @@ services:
     environment:
       LIGHTRAG_DIR: /lightrag-db
 
-  ui:
+  visualize:
     build: .
-    command: lightrag-server --working-dir /lightrag-db --port 9621
+    command: python visualize_graph.py
     env_file: .env
     volumes:
       - "${LIGHTRAG_DIR}:/lightrag-db"
     environment:
       LIGHTRAG_DIR: /lightrag-db
-      LLM_BINDING: anthropic
-      LLM_MODEL: claude-haiku-4-5-20251001
-      EMBEDDING_BINDING: openai
-      EMBEDDING_MODEL: voyage-4-lite
-      EMBEDDING_DIM: "1024"
-      OPENAI_API_KEY: ${VOYAGE_API_KEY}
-      OPENAI_BASE_URL: https://api.voyageai.com/v1
-    ports:
-      - "9621:9621"

@@ -111,26 +111,34 @@ def format_paper_block(
     arxiv_id = paper.get_short_id()
     url      = f"https://arxiv.org/abs/{arxiv_id}"
     pdf      = f"https://arxiv.org/pdf/{arxiv_id}"
+    title    = escape_html(paper.title)
+    authors  = escape_html(authors)
+    summary  = escape_html(summary)
 
     block = (
-        f"{tag}*{idx}. {paper.title}*\n"
+        f"{tag}<b>{idx}. {title}</b>\n"
         f"👤 {authors}\n"
         f"📅 {paper.published.strftime('%Y-%m-%d')}\n"
-        f"🔗 [Abstract]({url})  |  [PDF]({pdf})\n\n"
+        f"🔗 <a href=\"{url}\">Abstract</a>  |  <a href=\"{pdf}\">PDF</a>\n\n"
         f"{summary}"
     )
     return block
 
 
+def escape_html(text: str) -> str:
+    """Escape special HTML characters for Telegram HTML parse mode."""
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def send_telegram(text: str, token: str, chat_id: str) -> None:
-    """Send markdown message; splits if >4096 chars (Telegram limit)."""
+    """Send HTML-formatted message; splits if >4096 chars (Telegram limit)."""
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     chunks = [text[i:i+4000] for i in range(0, len(text), 4000)]
     for chunk in chunks:
         payload = {
             "chat_id": chat_id,
             "text": chunk,
-            "parse_mode": "Markdown",
+            "parse_mode": "HTML",
             "disable_web_page_preview": True,
         }
         r = requests.post(url, json=payload, timeout=15)
@@ -153,7 +161,7 @@ def main():
 
     date_str = datetime.now(timezone.utc).strftime("%d %b %Y")
     header = (
-        f"📡 *arXiv Daily · {CATEGORY}*\n"
+        f"📡 <b>arXiv Daily · {CATEGORY}</b>\n"
         f"📆 {date_str} — past {LOOKBACK_HOURS}h\n"
         f"📄 {total} new papers total | 🔬 {qs_count} quantum-sensing\n"
         f"{'─'*35}"
@@ -184,7 +192,7 @@ def main():
         json.dump(cache, f, indent=2)
     print("Saved papers_today.json")
 
-    footer = f"─────\n✅ End of digest · {len(papers)} papers sent\n\nReply *save <numbers>* to keep papers in Google Drive.\nExample: save 1 2 5"
+    footer = f"─────\n✅ End of digest · {len(papers)} papers sent\n\nReply <b>save &lt;numbers&gt;</b> to keep papers in Google Drive.\nExample: save 1 2 5"
     send_telegram(footer, TELEGRAM_TOKEN, TELEGRAM_CHAT)
     print("Done.")
 

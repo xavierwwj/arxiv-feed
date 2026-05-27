@@ -8,3 +8,5 @@ mcp
 pymupdf
 requests
 voyageai
+pyvis
+networkx
