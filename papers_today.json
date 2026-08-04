@@ -1,1 +1,17 @@
-{}
+{
+  "1": {
+    "arxiv_id": "2608.02425v1",
+    "title": "Measurement and control of the interaction frequency shift in bosonic optical lattice clocks",
+    "pdf_url": "https://arxiv.org/pdf/2608.02425v1"
+  },
+  "2": {
+    "arxiv_id": "2608.01916v1",
+    "title": "Interspecies clock comparison below $5 \\times 10^{-18}$ uncertainty with a transportable clock",
+    "pdf_url": "https://arxiv.org/pdf/2608.01916v1"
+  },
+  "3": {
+    "arxiv_id": "2608.01831v1",
+    "title": "Symmetry-Projected Compatible Multiparameter Quantum Sensing",
+    "pdf_url": "https://arxiv.org/pdf/2608.01831v1"
+  }
+}
