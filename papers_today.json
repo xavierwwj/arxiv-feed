@@ -1,7 +1,12 @@
 {
   "1": {
-    "arxiv_id": "2610.08031v1",
-    "title": "Total-field atomic magnetometry using an elliptically-polarized frequency-modulated light beam for geomagnetic-field applications",
-    "pdf_url": "https://arxiv.org/pdf/2610.08031v1"
+    "arxiv_id": "2610.10357v1",
+    "title": "Quantum simulation of the Heisenberg XXZ model on a Rydberg atom array",
+    "pdf_url": "https://arxiv.org/pdf/2610.10357v1"
+  },
+  "2": {
+    "arxiv_id": "2610.10082v1",
+    "title": "A scanning cavity for large area coherent coupling in atom interferometry",
+    "pdf_url": "https://arxiv.org/pdf/2610.10082v1"
   }
 }
